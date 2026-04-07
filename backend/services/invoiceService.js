@@ -118,7 +118,13 @@ const invoiceService = {
       const Receipt = require('../models/Receipt');
       const receipts = await Receipt.find({ invoiceId: invoice._id });
       const totalPaid = receipts.reduce((sum, receipt) => sum + receipt.amountPaid, 0);
+      const remainingBalance = Math.max(0, invoice.grandTotal - totalPaid);
 
+      // Update payment tracking fields
+      invoice.totalPaid = totalPaid;
+      invoice.remainingBalance = remainingBalance;
+
+      // Update status based on payment
       if (totalPaid >= invoice.grandTotal) {
         invoice.status = 'paid';
       } else if (totalPaid > 0) {

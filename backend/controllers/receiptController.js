@@ -133,6 +133,47 @@ const receiptController = {
       });
     }
   },
+
+  // Get remaining balance for invoice
+  async getRemainingBalance(req, res) {
+    try {
+      const { invoiceId } = req.params;
+      const balanceInfo = await receiptService.getRemainingBalance(invoiceId);
+
+      res.status(200).json({
+        success: true,
+        data: balanceInfo,
+      });
+    } catch (error) {
+      res.status(400).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  },
+
+  // Get total paid for invoice
+  async getTotalPaidForInvoice(req, res) {
+    try {
+      const { invoiceId } = req.params;
+      const totalPaid = await receiptService.getTotalPaidForInvoice(invoiceId);
+      const receipts = await receiptService.getReceiptsByInvoice(invoiceId);
+
+      res.status(200).json({
+        success: true,
+        data: {
+          totalPaid,
+          receiptCount: receipts.length,
+          receipts,
+        },
+      });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  },
 };
 
 module.exports = receiptController;

@@ -130,12 +130,16 @@ const ReceiptView = () => {
             </div>
             <div className="summary-item">
               <span>Amount Paid:</span>
-              <span>{formatCurrency(receipt.amountPaid)}</span>
+              <span>{formatCurrency(invoice?.totalPaid ?? receipt.amountPaid)}</span>
             </div>
             {invoice && (
               <div className="summary-item total">
                 <span>Outstanding Amount:</span>
-                <span>{formatCurrency(invoice.grandTotal - receipt.amountPaid)}</span>
+                <span>{formatCurrency(
+                  invoice.remainingBalance !== undefined
+                    ? invoice.remainingBalance
+                    : Math.max(0, (invoice.grandTotal || 0) - (invoice.totalPaid ?? receipt.amountPaid))
+                )}</span>
               </div>
             )}
           </div>

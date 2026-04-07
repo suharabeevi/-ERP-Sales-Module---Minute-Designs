@@ -4,6 +4,27 @@ const invoiceService = require('./invoiceService');
 const { v4: uuidv4 } = require('uuid');
 
 const receiptService = {
+  // Get remaining balance for invoice
+  async getRemainingBalance(invoiceId) {
+    try {
+      const invoice = await Invoice.findById(invoiceId);
+      if (!invoice) {
+        throw new Error('Invoice not found');
+      }
+
+      const totalPaid = await this.getTotalPaidForInvoice(invoiceId);
+      const remainingBalance = Math.max(0, invoice.grandTotal - totalPaid);
+      
+      return {
+        invoiceTotal: invoice.grandTotal,
+        totalPaid,
+        remainingBalance,
+      };
+    } catch (error) {
+      throw error;
+    }
+  },
+
   // Create receipt for payment
   async createReceipt(receiptData) {
     try {
@@ -14,6 +35,22 @@ const receiptService = {
 
       if (receiptData.amountPaid <= 0) {
         throw new Error('Amount paid must be greater than 0');
+      }
+
+      // Get current total paid amount
+      const totalPaid = await this.getTotalPaidForInvoice(receiptData.invoiceId);
+      const remainingBalance = invoice.grandTotal - totalPaid;
+
+      // Validate overpayment
+      if (receiptData.amountPaid > remainingBalance) {
+        throw new Error(
+          `Payment amount (₹${receiptData.amountPaid}) exceeds remaining balance (₹${remainingBalance.toFixed(2)})`
+        );
+      }
+
+      // Validate if invoice is already paid
+      if (invoice.status === 'paid') {
+        throw new Error('Invoice is already fully paid');
       }
 
       const receiptNumber = `RCP-${Date.now()}-${uuidv4().substring(0, 8)}`;
@@ -30,7 +67,7 @@ const receiptService = {
 
       await receipt.save();
 
-      // Update invoice status
+      // Update invoice status and payment tracking
       await invoiceService.updateInvoiceStatus(receiptData.invoiceId);
 
       return receipt;

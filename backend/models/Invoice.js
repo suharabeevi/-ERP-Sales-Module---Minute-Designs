@@ -39,6 +39,15 @@ const invoiceSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    totalPaid: {
+      type: Number,
+      default: 0,
+      min: 0,
+    },
+    remainingBalance: {
+      type: Number,
+      default: 0,
+    },
     status: {
       type: String,
       enum: ['unpaid', 'partial', 'paid'],

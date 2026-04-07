@@ -45,6 +45,8 @@ export const receiptService = {
   getAllReceipts: (filters = {}) => api.get('/receipts', { params: filters }),
   getReceiptById: (id) => api.get(`/receipts/${id}`),
   getReceiptsByInvoice: (invoiceId) => api.get(`/receipts/invoice/${invoiceId}`),
+  getRemainingBalance: (invoiceId) => api.get(`/receipts/balance/${invoiceId}`),
+  getTotalPaidForInvoice: (invoiceId) => api.get(`/receipts/payment-info/${invoiceId}`),
   deleteReceipt: (id) => api.delete(`/receipts/${id}`),
 };
 
