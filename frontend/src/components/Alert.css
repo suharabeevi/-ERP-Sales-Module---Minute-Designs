@@ -1,0 +1,27 @@
+.alert {
+  position: fixed;
+  top: 70px;
+  right: 20px;
+  max-width: 400px;
+  z-index: 999;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(400px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .alert {
+    right: 10px;
+    left: 10px;
+    max-width: none;
+  }
+}
