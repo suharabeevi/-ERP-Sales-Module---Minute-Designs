@@ -419,18 +419,6 @@ For production deployment:
 - Check all stock reduction operations
 - Review invoice creation logs
 
-## Future Enhancements
-
-- User authentication and authorization
-- Email notifications for orders and payments
-- Inventory reports and analytics
-- Multi-currency support
-- Discount and promo codes
-- Customer credit limits
-- Automated bill reminders
-- Advanced PDF generation
-- Mobile app version
-- Payment gateway integration
 
 ## License
 
