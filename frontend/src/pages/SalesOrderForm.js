@@ -173,7 +173,8 @@ const SalesOrderForm = ({ initialData = null }) => {
               <tbody>
                 {formData.items.map((item, index) => {
                   const selectedItem = items.find((i) => i._id === item.itemId);
-                  const itemTotal = selectedItem ? (selectedItem.price * item.quantity).toFixed(2) : '0.00';
+                  const quantity = Number(item.quantity) || 0;
+                  const itemTotal = selectedItem ? parseFloat((selectedItem.price * quantity).toFixed(2)) : 0;
 
                   return (
                     <tr key={index}>

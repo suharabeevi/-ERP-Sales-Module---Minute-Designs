@@ -53,7 +53,7 @@ const InvoiceList = () => {
       setSuccess('Invoice deleted successfully');
       fetchInvoices();
     } catch (error) {
-      setError(error.response?.data?.message || 'Failed to delete invoice');
+      setError(error.response?.data?.message || error.message || 'Failed to delete invoice');
     }
   };
 
@@ -145,7 +145,6 @@ const InvoiceList = () => {
                         <button
                           onClick={() => handleDelete(invoice._id)}
                           className="btn btn-sm btn-danger"
-                          disabled={invoice.status !== 'unpaid'}
                           title={invoice.status !== 'unpaid' ? 'Can only delete unpaid invoices' : ''}
                         >
                           Delete
