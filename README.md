@@ -276,16 +276,6 @@ A complete ERP Sales Management System built with the MERN stack (MongoDB, Expre
 - Proper HTTP status codes
 - User-friendly error messages
 
-## Security Considerations
-
-For production deployment:
-- Implement JWT authentication
-- Add user roles and permissions
-- Validate all inputs on backend
-- Use HTTPS
-- Implement rate limiting
-- Add input sanitization
-- Implement logging
 
 ## Testing the Application
 
@@ -339,16 +329,6 @@ For production deployment:
 - Check all stock reduction operations
 - Review invoice creation logs
 
-
-## License
-
-This project is open source and available under the MIT License.
-
-## Support
-
-For issues or questions, please create an issue in the repository.
-
----
 
 **Version:** 1.0.0  
 **Last Updated:** April 2026
